@@ -24,6 +24,18 @@ df_metadata['iiif_manifest_urls'] = df_metadata['id'].apply(lambda id: "http://b
 # Download the iiif manifests
 manifests_json, failed_manifests = download_iiif_manifests(df_metadata['iiif_manifest_urls'].values, "iiif_manifests.json")
 print('There were %d manifest that failed to download'%len(failed_manifests))
+
+idx2cote = {}
+for inha, manifest in manifests_json.items():
+    if 'metadata' in manifest:
+        for metadata in manifest['metadata']:
+            if metadata['label'] == 'reference':
+                if inha in inha2idx
+                idx2cote[inha2idx[inha]] = "_".join(metadata['value'].split('_')[2:4]).replace('.pdf', '')
+
+with open('idx2cote.json', 'w') as outfile:
+    json.dump(idx2cote, outfile)
+
 # Add to the dataframe the raw manifests and the list of urls of the images
 # !!! Dependent on the format of the iiif manifest of the bib num, may break...
 manifest_dict = {}
