@@ -8,7 +8,7 @@ import json
 import cv2
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-output_dir = '/scratch/raphael/boxes_dhsegment/predictions'
+output_dir = '/scratch/raphael/boxes_faster_rcnn/predictions'
 force_refresh = False
 model_dir_faster_r_cnn = '/scratch/raphael/object_detection/experiment/models/faster_rcnn_inception_resnet_v2_atrous_coco/frozen_model/frozen_inference_graph.pb'
 model_dir_dh_segment = '/home/rbarman/models/segmentation_objects_description/model2/export/'
@@ -24,7 +24,7 @@ tmp_preds = os.path.join(output_dir, 'preds_tmp')
 os.makedirs(tmp_preds, exist_ok=True)
 
 df_images = pd.read_csv(prediction_csv)
-images_list = df_images[df_images['class'] == 'objects_description']['filename'].apply(lambda filename: os.path.join(image_dir, filename)).sample(100).values
+images_list = df_images[df_images['class'] == 'objects_description']['filename'].apply(lambda filename: os.path.join(image_dir, filename)).values
 
 with open(idx2cote_path, 'r') as infile:
     idx2cote = {int(k) : v for k,v in json.load(infile).items()}
