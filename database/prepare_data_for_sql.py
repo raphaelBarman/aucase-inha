@@ -7,6 +7,8 @@ tqdm.pandas()
 import os
 from anytree.search import findall, findall_by_attr
 
+output_dir = './sql_out'
+
 section_hierarchy_path = '/scratch/raphael/page_content/section_hierarchy.npy'
 df_page_content_path = '/scratch/raphael/page_content/df_page_content.pkl'
 actor_excel_path = './actors.xlsx'
@@ -15,6 +17,8 @@ idx2cote_path = '/home/rbarman/sacase-inha/data/idx2cote.json'
 idx2inha_path = '/home/rbarman/sacase-inha/data/idx2inhaIdx.json'
 inha_bib_num_metadata_path = '/home/rbarman/sacase-inha/data/inha_bib_num_metadata.json'
 iiif_manifests_path = '/home/rbarman/sacase-inha/data/iiif_manifests.json'
+
+os.makedirs(output_dir, exist_ok=True)
 
 print("### Loading data utils ###")
 sql_utils = Sql_utils(idx2cote_path, idx2inha_path, inha_bib_num_metadata_path, iiif_manifests_path)
@@ -51,12 +55,12 @@ print("### Actor Sale table ###")
 
 # Actor Sale table
 
-table_actor_sale = []
+actor_sale_table = []
 for doc_id in tqdm(sale_table['sale_id'].values):
     for actor in sql_utils.idx2actors(doc_id):
         if actor != 'Drouot':
-            table_actor_sale.append((actor_raw2id(actor), doc_id))
-table_actor_sale = pd.DataFrame(table_actor_sale, columns=['actor_id', 'doc_id'])
+            actor_sale_table.append((actor_raw2id(actor), doc_id))
+actor_sale_table = pd.DataFrame(actor_sale_table, columns=['actor_id', 'doc_id'])
 
 # Loading 
 section_hierarchy = np.load(section_hierarchy_path).item(0)
@@ -106,3 +110,21 @@ df_sale['parent_section_sale'] = df_sale['parent_section'].apply(lambda section:
 df_sale['parent_section_page'] = df_sale['parent_section'].apply(lambda section: section.page if section is not None else None)
 df_sale['parent_section_entity'] = df_sale['parent_section'].apply(lambda section: int(section.entity) if section is not None else None)
 df_sale['iif_url'] = df_sale['basename'].apply(sql_utils.basename2iiifbase)
+
+object_table = df_sale.reset_index()[['doc', 'page', 'entity',
+                       'parent_section_sale',
+                       'parent_section_page', 
+                       'parent_section_entity',
+                       'num_completed',
+                       'text',
+                       'bbox',
+                       'image_url',
+                       'iif_url'
+                      ]].rename(columns={'doc' : 'sale_id', 'num_completed': 'num_ref', 'image_url':'inha_url'})
+
+
+actor_table.to_csv(os.path.join(output_dir, 'actor_table.csv'), index=False)
+sale_table.to_csv(os.path.join(output_dir, 'sale_table.csv'), index=False)
+actor_sale_table.to_csv(os.path.join(output_dir, 'actor_sale_table.csv'), index=False)
+section_table.to_csv(os.path.join(output_dir, 'section_table.csv'), index=False)
+object_table.to_csv(os.path.join(output_dir, 'object_table.csv'), index=False)

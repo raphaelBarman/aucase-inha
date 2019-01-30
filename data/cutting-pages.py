@@ -14,3 +14,4 @@ def split_image(filepath):
 
 for file in tqdm(two_pages_files):
     split_image(file)
+    os.remove(file)
