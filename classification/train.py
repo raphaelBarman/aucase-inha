@@ -1,8 +1,8 @@
 import pandas as pd
 from os import path
 import cv2
-import classification_utils as utils
-from tensorboard_utils import TrainValTensorBoard
+import classification.classification_utils as utils
+from classification.tensorboard_utils import TrainValTensorBoard
 from sklearn.model_selection import train_test_split
 from keras.applications.vgg16 import VGG16
 from keras.models import Model, load_model
@@ -42,6 +42,7 @@ def train(config):
     mixup = config['classification']['mixup']
     resume_training = config['classification']['resume_training']
     model_checkpoint_path = config['classification']['model_checkpoint_path']
+    labels_txt_path = config['classification']['labels_txt_path']
     use_tensorboard = config['classification']['use_tensorboard']
     log_directory = config['classification']['log_directory']
 
@@ -74,7 +75,7 @@ def train(config):
 
     # Get the labels names
     labels = y_train.columns.values.tolist()
-    with open('./labels.txt', 'w') as outfile:
+    with open(labels_txt_path, 'w') as outfile:
         for idx, label in enumerate(labels):
             outfile.write("%s %d\n" % (label, idx))
     NUM_CLASSES = len(labels)

@@ -1,55 +1,53 @@
-data_folder = './data'
-images_folder = './data/drouot_39-45'
-
-[data]
-output_dir = './data/medatadata'
-two_pages_path = './data/metadata/two_pages_files.txt'
-
+base_folder = '/scratch/raphael/test'
+#images_folder = './data/drouot_39-45'
+#
+#[data]
+#output_dir = './data/medatadata2'
+#
 [classification]
-IMAGE_SIZE = [224, 224]
-BATCH_SIZE = 32
-NUM_EPOCH = 20
-STEPS_PER_EPOCH = 50
-learning_rate = 1e-4
-test_size = 0.2
-over_sampling = False
-use_page_num = True
-mixup = False
-resume_training = False
-model_checkpoint_path = './data/vgg16_page_num.h5'
-use_tensorboard = False
-log_directory = './log'
-classification_csv = './data/classified_images.csv'
-labels_path = './labels.txt'
-predicted_classes_csv = './data/predicted_classes.csv'
-
+#IMAGE_SIZE = [224, 224]
+BATCH_SIZE = 6
+NUM_EPOCH = 2
+STEPS_PER_EPOCH = 2
+#learning_rate = 1e-4
+#test_size = 0.3
+#over_sampling = false
+#use_page_num = true
+#mixup = false
+#resume_training = false
+#model_checkpoint_path = './data/vgg16_page_num.h5'
+#use_tensorboard = false
+#log_directory = './log'
+classification_csv = '/home/rbarman/test.csv'
+#labels_path = './labels.txt'
+#predicted_classes_csv = './data/predicted_classes.csv'
+#
 [segmentation]
-output_dir = './data/boxes_prediction'
-force_refresh = False
-use_faster_r_cnn = True
-annotation_directory = '/scratch/raphael/data/annotations/objects_description'
-csv_train_path = './train.csv'
-csv_test_path = './test.csv'
-test_size = 0.2
-mask_output_dir = './masks'
-csv_output_dir = './masks'
-tf_record_path = './data'
+#output_dir = './data/boxes_prediction'
+#force_refresh = false
+use_faster_rcnn = false
+annotation_directory = '/home/rbarman/test_sacase'
+#csv_train_path = './train.csv'
+#csv_test_path = './test.csv'
+#test_size = 0.2
+#dhSegment_dir = './data/dhSegment'
+#tf_record_path = './data'
 model_dir = '/home/rbarman/models/segmentation_objects_description/model2/export/'
-ocr_dir_google = '/scratch/raphael/data/ocr/drouot_ocr_google'
-ocr_dir_inha = '/scratch/raphael/data/ocr/ocr_inha'
-use_inha_ocr = True
-optimize_output_dir = '/scratch/raphael/boxes_dhsegment'
-restore_df = True
-compute_prediction_data = False'
-
+#ocr_dir_google = '/scratch/raphael/data/ocr/drouot_ocr_google'
+#ocr_dir_inha = '/scratch/raphael/data/ocr/ocr_inha'
+#use_inha_ocr = true
+#optimize_output_dir = '/scratch/raphael/boxes_dhsegment'
+#restore_df = true
+#compute_prediction_data = false
+#
 [database]
-output_dir = '/scratch/raphael/page_content'
-force_refresh = False
-ocr_dir = '/scratch/raphael/data/ocr/drouot_ocr_google'
+#output_dir = '/scratch/raphael/page_content'
+#force_refresh = false
+#ocr_dir = '/scratch/raphael/data/ocr/drouot_ocr_google'
 section_classified_csv_path = './section_classified.csv'
 actor_excel_path = './actors.xlsx'
-sql_output_dir = '/scratch/raphael/page_content/sql_csv'
-mysql_host = 'localhost'
-mysql_schema = 'sacase'
-mysql_user = 'user'
-mysql_pass = 'pass'
+#sql_output_dir = '/scratch/raphael/page_content/sql_csv'
+#mysql_host = 'localhost'
+#mysql_schema = 'sacase'
+#mysql_user = 'user'
+#mysql_pass = 'pass'

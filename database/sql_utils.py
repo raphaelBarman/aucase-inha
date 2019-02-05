@@ -22,7 +22,7 @@ class Sql_utils:
             }
 
         self.iiif_manifests = read_json_gzip(iiif_manifests_path)
-        self.iiif_manifests = {int(k): v for k, v, in self.iiif_manifests}
+        self.iiif_manifests = {int(k): v for k, v, in self.iiif_manifests.items()}
 
         self.bib_num_metatada = read_json_gzip(inha_bib_num_metadata_path)
 

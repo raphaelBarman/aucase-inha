@@ -9,6 +9,7 @@ def create_tf_dataset(config):
     csv_test_path = config['segmentation']['csv_test_path']
     tf_record_path = config['segmentation']['tf_record_path']
 
+    os.makedirs(tf_record_path, exist_ok=True)
     class2int = {'section_author': 1, 'sale_description': 2}
 
     def create_tf_example(group_info):

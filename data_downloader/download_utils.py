@@ -39,8 +39,13 @@ def download_oai_dc(outfile=None,
     })
 
     records_fetched = list()
+    i = 0
     for record in tqdm(records):
+        if i == 100:
+            break
         records_fetched.append(record.metadata)
+        i += 1
+    records_fetched = records_fetched
     if outfile:
         write_json_gzip(outfile, records_fetched)
 

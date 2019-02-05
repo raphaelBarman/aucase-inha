@@ -1,4 +1,4 @@
-import classification_utils as utils
+import classification.classification_utils as utils
 from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
 import pandas as pd
@@ -12,7 +12,7 @@ def classify(config):
     use_page_num = config['classification']['use_page_num']
     images_folder = config['images_folder']
     model_checkpoint_path = config['classification']['model_checkpoint_path']
-    labels_path = config['classification']['labels_path']
+    labels_path = config['classification']['labels_txt_path']
     classification_csv = config['classification']['classification_csv']
     predicted_classes_csv = config['classification']['predicted_classes_csv']
 
@@ -24,7 +24,7 @@ def classify(config):
             and not os.path.exists(df_classification['filename'].iloc[0])):
         images_dir = os.path.join(images_folder, '')
         df_classification[
-            'filename'] = images_folder + df_classification['filename']
+            'filename'] = images_dir + df_classification['filename']
         if not os.path.exists(df_classification['filename'].iloc[0]):
             print('Invalid directory or images path')
             raise

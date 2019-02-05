@@ -1,7 +1,7 @@
-import segmentation_utils as seg_utils
-import post_processing_utils as pp_utils
-from predict_utils import predict_faster_r_cnn
-import metrics
+import segmentation.segmentation_utils as seg_utils
+import segmentation.post_processing_utils as pp_utils
+from segmentation.predict_utils import predict_faster_r_cnn
+import segmentation.metrics
 import json
 import os
 from os import path

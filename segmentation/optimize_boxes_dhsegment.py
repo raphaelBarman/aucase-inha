@@ -1,7 +1,7 @@
-import segmentation_utils as seg_utils
-import post_processing_utils as pp_utils
-import metrics
-from predict_utils import predict_dhSegment
+import segmentation.segmentation_utils as seg_utils
+import segmentation.post_processing_utils as pp_utils
+import segmentation.metrics as metrics
+from segmentation.predict_utils import predict_dhSegment
 import json
 import os
 import pandas as pd
@@ -26,8 +26,7 @@ def optimize_boxes_dhsegment(config):
     restore_df = config['segmentation']['restore_df']
     compute_prediction_data = config['segmentation']['compute_prediction_data']
 
-    prediction_data_path = 'segmentation_objects_description_pred_data.npy'
-
+    prediction_data_path = os.path.join(output_dir, 'segmentation_objects_description_pred_data.npy')
     os.makedirs(output_dir, exist_ok=True)
 
     with open(idx2cote_path, 'r') as infile:
@@ -50,13 +49,11 @@ def optimize_boxes_dhsegment(config):
     test_images = df_test['filename'].values
     basename_test = df_test['filename'].apply(lambda x: os.path.basename(x))
 
-    if compute_prediction_data:
+    if not os.path.exists(prediction_data_path) or compute_prediction_data:
         prediction_data = predict_dhSegment(test_images, model_dir)
-        np.save(
-            os.path.join(output_dir, prediction_data_path), prediction_data)
+        np.save(prediction_data_path, prediction_data)
     else:
-        prediction_data = np.load(
-            os.path.join(output_dir, prediction_data_path)).item(0)
+        prediction_data = np.load(prediction_data_path).item(0)
 
     def get_score(bin_thresh_content=0.8,
                   bin_thresh_section=0.2,

@@ -1,6 +1,6 @@
-import extraction_utils as extr_utils
-import numbers_utils as num_utils
-import section_utils as sec_utils
+import database.extraction_utils as extr_utils
+import database.numbers_utils as num_utils
+import database.section_utils as sec_utils
 import shapely.affinity as affinity
 import cv2
 import pandas as pd

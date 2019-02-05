@@ -59,10 +59,11 @@ def get_google_ocr_bboxes(file_name, base_width, base_height, ocr_dir,
     ocr = json.loads(json_str)
 
     bboxes = []
-
+    if 'fullTextAnnotation' not in ocr:
+        return bboxes, 1, 1
     page = ocr['fullTextAnnotation']['pages'][0]
     if len(ocr['fullTextAnnotation']['pages']) > 1:
-        return bboxes
+        return bboxes, 1, 1
 
     ocr_width = page['width']
     ocr_height = page['height']
@@ -149,6 +150,8 @@ def page_content_from_boxes(bboxes_sel,
                             image=None,
                             matching_threshold=0.5,
                             filling_threshold=5e-3):
+    if len(bboxes_sel) == 0:
+        return {}
     key2bbox_sel = {
         bbox_geom2key(bbox_sel): bbox_sel
         for bbox_sel in bboxes_sel

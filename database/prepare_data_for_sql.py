@@ -1,4 +1,4 @@
-from sql_utils import Sql_utils
+from database.sql_utils import Sql_utils
 import numpy as np
 import pandas as pd
 from glob import glob
@@ -18,8 +18,8 @@ def prepare_data_for_sql(config):
     idx2cote_path = os.path.join(metadata_path, 'idx2cote.json')
     idx2inha_path = os.path.join(metadata_path, 'idx2inhaIdx.json')
     inha_bib_num_metadata_path = os.path.join(metadata_path,
-                                              'inha_bib_num_metadata.json')
-    iiif_manifests_path = os.path.join(metadata_path, 'iiif_manifests.json')
+                                              'inha_bib_num_metadata.json.gz')
+    iiif_manifests_path = os.path.join(metadata_path, 'iiif_manifests.json.gz')
     section_hierarchy_path = os.path.join(page_content_dir,
                                           'section_hierarchy.npy')
     df_page_content_path = os.path.join(page_content_dir,

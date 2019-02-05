@@ -1,6 +1,6 @@
-import segmentation_utils as seg_utils
-import post_processing_utils as pp_utils
-import predict_utils as pred_utils
+import segmentation.segmentation_utils as seg_utils
+import segmentation.post_processing_utils as pp_utils
+import segmentation.predict_utils as pred_utils
 import pandas as pd
 import os
 import json
@@ -26,7 +26,7 @@ def predict_boxes(config):
     tmp_preds = os.path.join(output_dir, 'preds_tmp')
 
     os.makedirs(tmp_preds, exist_ok=True)
-    df_images = pd.read_csv(prediction_csv)
+    df_images = pd.read_csv(prediction_csv, header=None, names=['filename', 'class'])
     images_list = df_images[
         df_images['class'] == 'objects_description']['filename'].apply(
             lambda filename: os.path.join(image_dir, filename)).values
@@ -49,7 +49,7 @@ def predict_boxes(config):
             basename = os.path.basename(file_name).split('.')[0].replace(
                 '.jpg', '')
             save_path = os.path.join(output_dir,
-                                     basename + '_faster_r_cnn_boxes.npy')
+                                     basename + '_boxes.npy')
             if not force_refresh and os.path.exists(save_path):
                 bboxes_data[basename] = np.load(save_path)
                 continue
@@ -88,7 +88,7 @@ def predict_boxes(config):
             basename = os.path.basename(file_name).split('.')[0].replace(
                 '.jpg', '')
             save_path = os.path.join(output_dir,
-                                     basename + '_faster_r_cnn_boxes.npy')
+                                     basename + '_boxes.npy')
             if not force_refresh and os.path.exists(save_path):
                 bboxes_data[basename] = np.load(save_path)
                 continue

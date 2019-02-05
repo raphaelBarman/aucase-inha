@@ -1,4 +1,4 @@
-import segmentation_utils as utils
+import segmentation.segmentation_utils as utils
 import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -13,6 +13,9 @@ def prepare_dataset(config):
     csv_train_path = config['segmentation']['csv_train_path']
     csv_test_path = config['segmentation']['csv_test_path']
     test_size = config['segmentation']['test_size']
+
+    os.makedirs(
+        os.path.dirname(os.path.abspath(csv_train_path)), exist_ok=True)
 
     df = utils.get_df(annotation_directory).reset_index()
 

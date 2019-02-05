@@ -1,4 +1,4 @@
-import download_utils as du
+import data_downloader.download_utils as du
 import pandas as pd
 import json
 import os
@@ -12,7 +12,9 @@ def downloading_data(config):
     metadata_folder = config['data']['output_dir']
     images_folder = config['images_folder']
 
+    os.makedirs(metadata_folder, exist_ok=True)
     # downloading or loading the metadata from the OAI-PMH
+    print("### Downloading OAI PMH metadata ###")
     inha_bib_num_metadata = du.download_oai_dc(
         os.path.join(metadata_folder, 'inha_bib_num_metadata.json.gz'))
 
@@ -38,6 +40,7 @@ def downloading_data(config):
         lambda id: iiif_base_url % id)
 
     # Download the iiif manifests
+    print("### Downloading iiif manifests ###")
     manifests_json, failed_manifests = du.download_iiif_manifests(
         df_metadata['iiif_manifest_urls'].values,
         os.path.join(metadata_folder, "iiif_manifests.json.gz"))
@@ -91,6 +94,9 @@ def downloading_data(config):
     period_idxs = dates[(dates > '1939-01-01') & (dates < '1945-12-31')].index
     not_null_idxs = df_metadata[df_metadata.images.notnull()].index
 
+    period_idxs = not_null_idxs
+    drouot_idxs = not_null_idxs
+
     # Creating a download dictionary containing
     # the filename as a key and the url as value
     if not os.path.exists(images_folder):
@@ -100,21 +106,21 @@ def downloading_data(config):
             period_idxs).intersection(not_null_idxs)].reset_index()[[
                 'index', 'images'
             ]].values:
-        prefix = "%s/%06d_" % (images_folder, catalogue_idx)
+        prefix = os.path.join(images_folder, '%06d_'%catalogue_idx)
         for index, image in enumerate(images):
             filename = prefix + "%06d.jpg" % index
             download_dict[filename] = image
 
     # Downloading all the images
+    print("### Downloading images ###")
     pbar = tqdm(total=len(download_dict))
 
     def update(i):
         pbar.update()
 
-    if __name__ == '__main__':
-        pool = Pool(8)
-        for item in download_dict.items():
-            pool.apply_async(du.download_image, args=(item, ), callback=update)
-        pool.close()
-        pool.join()
-        pbar.close()
+    pool = Pool(8)
+    for item in download_dict.items():
+        pool.apply_async(du.download_image, args=(item, ), callback=update)
+    pool.close()
+    pool.join()
+    pbar.close()
