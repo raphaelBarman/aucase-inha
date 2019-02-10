@@ -53,6 +53,9 @@ def predict_boxes(config):
             if not force_refresh and os.path.exists(save_path):
                 bboxes_data[basename] = np.load(save_path)
                 continue
+            if not os.path.exists(file_name):
+                print("%s does not exist, skipping"%file_name)
+                continue
 
             image = cv2.imread(file_name)
             gray_img = seg_utils.cvt2gray(image)

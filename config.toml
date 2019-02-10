@@ -1,8 +1,9 @@
 base_folder = '/scratch/raphael/test'
-#images_folder = './data/drouot_39-45'
+images_folder = '/scratch/raphael/data/drouot'
 #
 #[data]
 #output_dir = './data/medatadata2'
+two_pages_path = './data/two_pages_files.txt'
 #
 [classification]
 #IMAGE_SIZE = [224, 224]
@@ -25,14 +26,17 @@ classification_csv = '/home/rbarman/test.csv'
 [segmentation]
 #output_dir = './data/boxes_prediction'
 #force_refresh = false
-use_faster_rcnn = false
-annotation_directory = '/home/rbarman/test_sacase'
+use_faster_rcnn = true
+#annotation_directory = '/home/rbarman/test_sacase'
+annotation_directory = '/scratch/raphael/data/annotations/objects_description'
 #csv_train_path = './train.csv'
 #csv_test_path = './test.csv'
+csv_test_path = '/home/rbarman/models/segmentation_objects_description/test.csv'
 #test_size = 0.2
 #dhSegment_dir = './data/dhSegment'
 #tf_record_path = './data'
-model_dir = '/home/rbarman/models/segmentation_objects_description/model2/export/'
+#model_dir = '/home/rbarman/models/segmentation_objects_description/model2/export/'
+model_dir = '/scratch/raphael/object_detection/experiment/models/faster_rcnn_inception_resnet_v2_atrous_coco/frozen_model/frozen_inference_graph.pb'
 #ocr_dir_google = '/scratch/raphael/data/ocr/drouot_ocr_google'
 #ocr_dir_inha = '/scratch/raphael/data/ocr/ocr_inha'
 #use_inha_ocr = true

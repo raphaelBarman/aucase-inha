@@ -385,9 +385,18 @@ def get_inha_ocr_bboxes(file_name,
         print(filepath, 'not found')
         return np.array([])
     with gzip.GzipFile(filepath, 'r') as infile:
-        json_bytes = infile.read()
+        try:
+            json_bytes = infile.read()
+        except OSError:
+            print('could not read', filepath)
+            return np.array([])
+
     json_str = json_bytes.decode('utf-8')
-    data = json.loads(json_str)
+    try:
+        data = json.loads(json_str)
+    except json.decoder.JSONDecodeError:
+        print('could not read json of', filepath)
+        return np.array([])
     bboxes = []
     for block in data['textblocks']:
         for line in block['CONTENT']:

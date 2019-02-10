@@ -52,7 +52,8 @@ def get_google_ocr_bboxes(file_name, base_width, base_height, ocr_dir,
     file_name = internal2inha(file_name, idx2cote)
     filepath = os.path.join(ocr_dir, file_name + '_ocr.json.gz')
     if not os.path.exists(filepath):
-        return np.array([])
+        print("Could not find", filepath)
+        return np.array([]), 1, 1
     with gzip.GzipFile(filepath, 'r') as infile:
         json_bytes = infile.read()
     json_str = json_bytes.decode('utf-8')
@@ -60,9 +61,11 @@ def get_google_ocr_bboxes(file_name, base_width, base_height, ocr_dir,
 
     bboxes = []
     if 'fullTextAnnotation' not in ocr:
+        print("No text in", filepath)
         return bboxes, 1, 1
     page = ocr['fullTextAnnotation']['pages'][0]
     if len(ocr['fullTextAnnotation']['pages']) > 1:
+        print("More than one page in", filepath)
         return bboxes, 1, 1
 
     ocr_width = page['width']
@@ -150,7 +153,7 @@ def page_content_from_boxes(bboxes_sel,
                             image=None,
                             matching_threshold=0.5,
                             filling_threshold=5e-3):
-    if len(bboxes_sel) == 0:
+    if len(bboxes_sel) == 0 or len(word_bboxes) == 0:
         return {}
     key2bbox_sel = {
         bbox_geom2key(bbox_sel): bbox_sel

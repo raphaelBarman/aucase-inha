@@ -79,9 +79,15 @@ def load_config(config_path):
     with open(config_path, 'r') as infile:
         config = toml.load(infile)
     base_folder = config.get('base_folder') or './data' 
+    default_config = load_default_config(base_folder)
+    dict_merge(default_config, config)
+    return default_config
+
+def load_default_config(base_folder):
     default_config['base_folder'] = base_folder
     default_config['images_folder'] = join(base_folder, 'drouot_39-45')
     default_config['data']['output_dir'] = join(base_folder, 'metadata')
+    default_config['data']['two_pages_path'] = join(base_folder, 'metadata', 'two_pages_files.txt')
     default_config['classification']['labels_path'] = join(base_folder, 'labels.txt')
     default_config['classification']['model_checkpoint_path'] = join(base_folder, 'vgg16_page_num.h5')
     default_config['classification']['labels_txt_path'] = join(base_folder, 'labels.txt')
@@ -94,7 +100,6 @@ def load_config(config_path):
     default_config['segmentation']['output_dir'] = join(base_folder, 'boxes_prediction')
     default_config['database']['output_dir'] = join(base_folder, 'page_content')
     default_config['database']['sql_output_dir'] = join(base_folder, 'sql_csv')
-    dict_merge(default_config, config)
     return default_config
 
 
