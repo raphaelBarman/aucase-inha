@@ -28,4 +28,4 @@ In general, it would be a good idea to comment out most of the step of the main.
 The whole pipeline can take days or even a week or two (without GPU) to complete.
 
 # SQL schema description
-The SQL schema description is [available here](https://github.com/sriak/aucase-inha/blob/master/sql_schema_description.md)
+The SQL schema description is [available here](https://github.com/sriak/aucase-inha/blob/master/sql_schema_description.md).
