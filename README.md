@@ -1,3 +1,5 @@
+[**Version française**](https://github.com/sriak/aucase-inha/blob/master/LISEZMOI.md)
+
 # General description
 Auction Catalog Segmentation (AuCaSe) is a project realised by Raphaël Barman at
 the [Institut national d'histoire de l'art (INHA)](https://www.inha.fr) during an
