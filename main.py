@@ -10,25 +10,25 @@ from database.prepare_data_for_sql import prepare_data_for_sql
 
 # Load configuration
 config = load_config('./config.toml')
-## Download the data
-#downloading_data(config)
-#
-## Classification
-### Train the classifier
-#train(config)
-### Classify the images
-#classify(config)
-#
-## Segmentation
-### Prepare the dataset
-#prepare_dataset.prepare_dataset(config)
-### Prepare the dhSegment masks
-#create_masks.create_masks(config)
-### Prepare the tf api data
-#create_tf_dataset.create_tf_dataset(config)
-### Optimize the parameters
-#optimize_boxes_dhsegment(config)
-## Predict the boxes
+# Download the data
+downloading_data(config)
+
+# Classification
+## Train the classifier
+train(config)
+## Classify the images
+classify(config)
+
+# Segmentation
+## Prepare the dataset
+prepare_dataset.prepare_dataset(config)
+## Prepare the dhSegment masks
+create_masks.create_masks(config)
+## Prepare the tf api data
+create_tf_dataset.create_tf_dataset(config)
+## Optimize the parameters
+optimize_boxes_dhsegment(config)
+# Predict the boxes
 #predict_boxes(config)
 # Page content
 ## Extract the page content
