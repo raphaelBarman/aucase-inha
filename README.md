@@ -26,3 +26,6 @@ Technically, by modifying the config.toml file and running the main.py file, the
 However, it still needs some steps to be achieved before running it, such as training or getting different models.
 In general, it would be a good idea to comment out most of the step of the main.py and run them one by one.
 The whole pipeline can take days or even a week or two (without GPU) to complete.
+
+# SQL schema description
+The SQL schema description is [available here](https://github.com/sriak/aucase-inha/blob/master/sql_schema_description.md)
