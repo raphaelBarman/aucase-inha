@@ -45,7 +45,8 @@ def extract_page_content(config):
                                  basename + '_page_content.npy')
         if not force_refresh and os.path.exists(save_path):
             page_content, scale_x, scale_y = np.load(save_path)
-            page_content = np.array(page_content)
+            if len(page_content) > 0:
+                page_content = np.array(page_content)
         else:
             boxes = np.load(boxes_file)
             boxes = np.array(

@@ -96,3 +96,17 @@ def create_tf_dataset(config):
         tf_example = create_tf_example(group)
         writer.write(tf_example.SerializeToString())
     writer.close()
+
+    with open(
+        os.path.join(
+            tf_record_path, 'objects_description.pbtxt'), 'w') as outfile:
+        outfile.write("""item {
+  id: 1
+  name: 'section_author'
+}
+
+item {
+  id: 2
+  name: 'sale_description'
+}
+""")
