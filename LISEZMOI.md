@@ -13,3 +13,6 @@ Ces données pourront être explorées et téléchargées gratuitement à l'aven
 Le point d'entrée principal de ce dépôt est le fichier "Notebook annoté" qui contient toutes les étapes de la pipeline depuis le téléchargement des numérisations jusqu'à l'importation des données dans une base sql.
 
 Techniquement, en modifiant le fichier config.toml et en exécutant le fichier main.py, tout la pipeline devrait fonctionner. Cependant, il reste encore quelques étapes à passer avant de l'exécuter, comme l'entraînement ou l'obtention de différents modèles. En général, c'est une bonne idée de commenter la plupart des étapes du fichier main.py et de les exécuter une par une. L'ensemble de la pipeline peut prendre des jours, voire une semaine ou deux (sans GPU).
+
+# Description du schéma SQL
+La description du schéma SQL est [disponible ici](https://github.com/sriak/aucase-inha/blob/master/description_schema_sql.md)
